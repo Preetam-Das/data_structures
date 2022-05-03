@@ -4,9 +4,13 @@
 int main()
 {
     dArr *d = new_da();
-    for (int i = 0; i < 45; i++) {
+    for (int i = 0; i < 5; i++) {
 	add_da(d, i);
-	printf("%d ", d->arr[i]);
-	printf("size: %d capacity: %d\n", d->size, d->capacity);
+	printf("%d size: %d capacity: %d\n", d->arr[i], d->size, d->capacity);
+    }
+    insert_da(d, -99, d->size);
+    fputs("\n", stdout);
+    for (int i = 0; i < d->size; i++) {
+	printf("%d size: %d capacity: %d\n", d->arr[i], d->size, d->capacity);
     }
 }

@@ -21,6 +21,7 @@ typedef struct dynamicArray dArr;
 #define BASE_SIZE 10
 #define MALLOC_FAIL 12
 #define EMPTY_ARR 13
+#define OUT_OF_BOUND 14
 
 /* Functions to add element, insert a element and to delete an */
 /* element */
@@ -29,5 +30,6 @@ dArr* new_da();
 void add_da(dArr *d, int element);
 void insert_da(dArr *d, int element, int pos);
 void del_da(dArr *d, int pos);
+void resize_da(dArr *d);
 
 #endif
