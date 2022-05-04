@@ -13,4 +13,10 @@ int main()
     for (int i = 0; i < d->size; i++) {
 	printf("%d size: %d capacity: %d\n", d->arr[i], d->size, d->capacity);
     }
+    
+    del_da(d, 0);
+    fputs("\n", stdout);
+    for (int i = 0; i < d->size; i++) {
+	printf("%d size: %d capacity: %d\n", d->arr[i], d->size, d->capacity);
+    }
 }

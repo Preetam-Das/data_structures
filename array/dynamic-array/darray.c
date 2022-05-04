@@ -25,6 +25,16 @@ dArr* new_da()
     return temp;
 }
 
+/* Resize the array according to your need */
+
+void resize_da(dArr *d)
+{
+    if (d->size >= (d->capacity)/2) {
+       d->arr = (int*) realloc((void*) d->arr, sizeof(int) * (d->capacity * 2));
+       d->capacity *= 2;
+    }
+}
+
 /* Add element at the end of the dynamic array keeping */
 /* in check the size and capacity and reallocating if */ 
 /* nedded */
@@ -62,12 +72,22 @@ void insert_da(dArr *d, int element, int pos)
     resize_da(d);
 }
 
-/* Resize the array according to your need */
+/* Delete an element based on the index position */
+/* and reallocate as neccessary */
 
-void resize_da(dArr *d)
+void del_da(dArr *d, int pos)
 {
-    if (d->size >= (d->capacity)/2) {
-       d->arr = (int*) realloc((void*) d->arr, sizeof(int) * (d->capacity * 2));
-       d->capacity *= 2;
+    //bound check
+    if (pos < 0 || pos >= d->size) {
+	fputs("Out of bound.\n", stdout);
+	exit(OUT_OF_BOUND);
     }
+
+    for (int i = pos + 1; i < d->size; i++) {
+	d->arr[i - 1] = d->arr[i];
+    }
+
+    d->size--;
+    resize_da(d);
+
 }
