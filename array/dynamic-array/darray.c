@@ -1,5 +1,6 @@
 /* Tue May  3 09:49:41 PM IST 2022 */
 /* Author: preetamsad */
+/* Title: Dynamic Array Implementation */
 
 #include "darray.h"
 #include <stdlib.h>
@@ -13,10 +14,7 @@ dArr* new_da()
     temp->arr = (int*) malloc(sizeof(int) * BASE_SIZE);
 
     if (temp == NULL || temp->arr == NULL) {
-	fputs("malloc failed.\n", stderr);
-	free(temp);
-	free(temp->arr);
-	exit(MALLOC_FAIL);
+	hanlde_error(temp, MALLOC_FAIL);
     }
 	
     temp->size = 0;
@@ -42,8 +40,7 @@ void resize_da(dArr *d)
 void add_da(dArr * d, int element)
 {
     if (d == NULL) {
-       fputs("Array is empty.\n", stderr);
-       exit(EMPTY_ARR);
+       hanlde_error(d, EMPTY_ARR);
     }
 
     resize_da(d);
@@ -58,8 +55,7 @@ void add_da(dArr * d, int element)
 void insert_da(dArr *d, int element, int pos) 
 {
     if (pos < 0 || pos > d->size) {
-	fputs("Position out of bound.\n", stderr);
-	exit(OUT_OF_BOUND);
+	hanlde_error(d, OUT_OF_BOUND);
     }
         
     for (int i = d->size; i > pos; i--) {
@@ -79,8 +75,7 @@ void del_da(dArr *d, int pos)
 {
     //bound check
     if (pos < 0 || pos >= d->size) {
-	fputs("Out of bound.\n", stdout);
-	exit(OUT_OF_BOUND);
+	hanlde_error(d, OUT_OF_BOUND);
     }
 
     for (int i = pos + 1; i < d->size; i++) {
@@ -90,4 +85,26 @@ void del_da(dArr *d, int pos)
     d->size--;
     resize_da(d);
 
+}
+
+/* Error Handling */
+
+void hanlde_error(dArr *d, enum error_code e)
+{
+    switch(e) {
+	case 0:
+	    fputs("\nMalloc denied to return any memory :,).\n", stderr);
+	    free(d);
+	    break;
+	case 1:
+	    fputs("\nArray is Empty. Nothing to do here.\n", stderr);
+	    free(d->arr);
+	    break;
+	case 2:
+	    fputs("\nDon't try to cross the boundaries. Only garbage here :D.\n", stderr);
+	    free(d->arr);
+	    break;
+	default:
+	    break;
+    }
 }
