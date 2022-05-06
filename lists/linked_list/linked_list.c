@@ -26,8 +26,9 @@ linked_list* new_llist()
 
 void print_llist(linked_list *l)
 {
-    if (l == NULL || l->head == NULL) {
+    if (l == NULL || l->size == 0 || l->head == NULL) {
 	handle_error(l, EMPTY_LIST);
+	return;
     }
     
     struct node *ptr = l->head;
@@ -103,22 +104,88 @@ void insert_llist(linked_list *l, int pos, int element)
     return;;
 }
 
+/* Delete from the beginning of the list */
+
+void delbg_llist(linked_list *l)
+{
+    if (isempty(l)) {
+	handle_error(l, EMPTY_LIST);
+	fputs("hello\n", stdout);
+	return;
+    }
+
+    struct node *temp = l->head;
+    l->head  = l->head->next;
+
+    free(temp);
+    l->size--;
+}
+
+/* Delete from the end of the list */
+
+void delend_llist(linked_list *l)
+{
+    if (isempty(l)) {
+	handle_error(l, EMPTY_LIST);
+	return;
+    }
+    
+    if (l->size == 1) return delbg_llist(l);
+
+    struct node *ptr = l->head;
+    struct node *temp = l->head;
+
+    while (ptr->next != NULL) {
+	temp = ptr;
+	ptr = ptr->next;
+    }
+    free(ptr);
+    temp->next = NULL;
+    l->size--;
+
+}
+
+/* Delete at a certain position of the list */
+
+void del_llist(linked_list *l, int pos)
+{
+    if (pos < 0 || pos >= l->size) {
+	handle_error(l, OUT_OF_BOUNDARY);
+	return;
+    }
+
+    if (pos == 0) return delbg_llist(l);
+    if (pos == l->size) return delend_llist(l); 
+
+    struct node *ptr = l->head;
+    struct node *temp = ptr;
+    for (int i = 0; i < pos; i++) {
+	temp = ptr;
+	ptr = ptr->next;
+    }
+
+    temp->next = ptr->next;
+    free(ptr);
+    l->size--;
+    
+}
+    
+    
 /* Error Handling */
 
 void handle_error(linked_list *l, enum error_code e)
 {
     switch(e) {
 	case 0:
-	    fputs("\nMalloc denied to return any memory :,).\n", stderr);
+	    fputs("Malloc denied to return any memory :,).\n", stderr);
 	    free(l);
 	    break;
 	case 1:
-	    fputs("\nList is Empty. Nothing to do here.\n", stderr);
+	    fputs("List is Empty. Nothing to do here.\n", stderr);
 	    free(l->head);
 	    break;
 	case 2:
-	    fputs("\nDon't try to cross the boundaries. Only garbage here :D.\n", stderr);
-	    free(l->head);
+	    fputs("Don't try to cross the boundaries. Only garbage here :D.\n", stderr);
 	    break;
 	default:
 	    break;

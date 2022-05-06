@@ -102,7 +102,6 @@ void hanlde_error(dArr *d, enum error_code e)
 	    break;
 	case 2:
 	    fputs("\nDon't try to cross the boundaries. Only garbage here :D.\n", stderr);
-	    free(d->arr);
 	    break;
 	default:
 	    break;

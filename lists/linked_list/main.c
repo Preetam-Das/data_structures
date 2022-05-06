@@ -4,11 +4,10 @@
 int main()
 {
     linked_list *l = new_llist();
-    insert_llist(l, l->size, 69);
-    insert_llist(l, l->size, 69520);
-    insert_llist(l, l->size, 420);
-    /* printf("%d\n", l->head->data); */
+    for (int i = 0 ; i < 5 ; i++) {
+	insert_llist(l, l->size, 69 + i);
+    }
     print_llist(l);
-    insert_llist(l, 1, 0);
+    del_llist(l, -1);
     print_llist(l);
 }
