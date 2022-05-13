@@ -2,6 +2,8 @@
 /* Author: preetamsad */
 /* Title: Adjacency-Matrix Representation */
 
+#include <stdbool.h>
+
 #ifndef ADJACENCY_MATRIX_H
 #define ADJACENCY_MATRIX_H
 
@@ -23,5 +25,6 @@ typedef unsigned char* ad_dmatrix;
 ad_dmatrix new_ad_dmatrix(int nvertices);
 void connect_ad_dmatrix(ad_dmatrix adm_ptr, int from, int to);
 void print_ad_dmatrix(ad_dmatrix adm_ptr, int V);
+bool connected_ad_dmatrix(ad_dmatrix adm_ptr, int from, int to);
 
 #endif

@@ -6,6 +6,7 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 /* Returns a admatrix pointer initialized with zero */
 
@@ -34,4 +35,11 @@ void print_ad_dmatrix(ad_dmatrix adm_ptr, int V)
 	}
 	fputs("\n", stdout);
     }
+}
+
+/* Checks if two vertices are connected or not */
+
+bool connected_ad_dmatrix(ad_dmatrix adm_ptr, int from, int to)
+{
+    return (adm_ptr[from] & (1 << (CHAR_BIT - to - 1)));
 }

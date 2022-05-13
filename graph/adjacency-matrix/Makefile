@@ -1,13 +1,20 @@
 CC=gcc
 CFLAGS=-Wall -Wextra
+SRCDIR=src
+INCDIR=include
+OBJDIR=obj
+BINDIR=bin
+SRC=$(wildcard $(SRCDIR)/*.c)
+BIN=$(BINDIR)/main
+OBJ=$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
 
-all: main
+all: $(BIN)
 
-main: main.o adjacency-matrix.o
-	$(CC) $(CFLAGS) -o $@ $^
+$(BIN): $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $(BIN)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -o $@ -c $<
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@ -I$(INCDIR)
 
 clean:
-	rm -f main *.o *.gch
+	rm -f $(BINDIR)/* $(OBJDIR)/*
